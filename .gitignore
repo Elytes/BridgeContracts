@@ -1,0 +1,31 @@
+# General
+yarn-error.log
+node_modules
+.DS_STORE
+
+# Foundry files
+cache
+out-via-ir
+
+# Config files
+.env
+
+# Avoid ignoring gitkeep
+!/**/.gitkeep
+
+# Keep related abi
+out/*/*
+!out/Greeter.sol/*
+
+# Keep the latest deployment only
+broadcast/*/*/*
+/out
+/anvil.exe
+/cast.exe
+/chisel.exe
+/forge.exe
+/OracleBridge.sol
+/XERC20.sol
+/XERC20Factory.sol
+/XERC20Lockbox.sol
+/broadcast
