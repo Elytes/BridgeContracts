@@ -11,19 +11,19 @@ import {ScriptingLibrary} from './ScriptingLibrary/ScriptingLibrary.sol';
 
 contract MultichainCreateXERC20 is Script, ScriptingLibrary {
   uint256 public deployer = vm.envUint('DEPLOYER_PRIVATE_KEY');
-  string[] public chains = ['POLYGON_RPC'];
+  string[] public chains = ['MAINNET_RPC', 'POLYGON_RPC'];
   string public temp = vm.readLine('./solidity/scripts/ScriptingLibrary/FactoryAddress.txt');
 
   address public fact = toAddress(temp);
   XERC20Factory public factory = XERC20Factory(fact);
   // NOTE: This is an array of the addresses of the ERC20 contract you are deploying the lockbox for, if you dont want to deploy a lockbox leave this as is
   // NOTE: You must add the token address of your token for each chain you are deploying to in order of how the chains are listed in chains.txt, if no address is listed we will not deplyo a lockbox
-  address[] public erc20 = [address(0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889)];
+  address[] public erc20 = [address(0x0000000000079c645A9bDE0Bd8Af1775FAF5598A), address(0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889)];
   // NOTE: Please also for each add a boolean to this array, if you are deploying a lockbox for the native token set it to true, if not set it to false for each iteration of an erc20
-  bool[] public isNative = [false];
+  bool[] public isNative = [true, true];
 
-  string[] name = ['xMATIC2'];
-  string[] symbol = ['xMATIC2'];
+  string[] name = ['xHYPRA', 'xMATIC2'];
+  string[] symbol = ['xHYPRA', 'xMATIC2'];
   uint8 decimals = 18;
 
   function run() public {
@@ -50,7 +50,6 @@ contract MultichainCreateXERC20 is Script, ScriptingLibrary {
 
       // If this chain does not have a factory we will revert
       require(keccak256(address(factory).code) == keccak256(type(XERC20Factory).runtimeCode), 'There is no factory deployed on this chain');
-
       address xerc20 = factory.deployXERC20(name[i], symbol[i], decimals, minterLimits[i], burnLimits[i], bridges[i]);
       address lockbox;
       if (_erc20 != address(0) && !_isNative) {

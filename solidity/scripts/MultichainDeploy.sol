@@ -14,7 +14,7 @@ contract MultichainDeploy is Script, ScriptingLibrary {
 
   function run() public {
     //TODO: Change salt from this test to prod before release
-    bytes32 _salt = 0xc067a3e3331e0bb098fa2f1e252f3626179574fc65a740db9ea73cb385915101;
+    bytes32 _salt = 0xc062a3e2231e0ab098fa2f1e252f3626179574fc65a740db9ea73cb385915101;
     address[] memory factories = new address[](chains.length);
 
     for (uint256 i; i < chains.length; i++) {
